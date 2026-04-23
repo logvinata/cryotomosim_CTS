@@ -75,27 +75,20 @@ if strcmp(pix,'gui')
         'Ice opacity (0 for no ice)'};
     ptitle = 'Model Generation Parameters';
     
-default = struct2cell(param);
-for i = 1:numel(default)
-    default{i} = num2str(default{i});
-end
-
-default = default(1:numel(prompt));   % keep defaults aligned with prompts
-
-p = inputdlg(prompt,ptitle,[1 40],default);
-if isempty(p)
-    error('param_model:cancelled','Model parameter dialog was cancelled.');
-end
-
-fn = fieldnames(param);
-fn = fn(1:numel(p));                  % keep fields aligned with GUI inputs
-
-for i = 1:numel(fn)
-    tmp = str2double(p{i});
-    if isnan(tmp), tmp = str2num(p{i}); end
-    if i == 5, tmp = p{i}; end
-    param.(fn{i}) = tmp;
-end
+    default = struct2cell(param); %get all the default values back out into a list
+    for i=1:numel(default)
+        default{i} = num2str(default{i});
+    end
+    
+    p = inputdlg(prompt,ptitle,[1 40],default); %dialogue input happens
+    
+    fn = fieldnames(param);
+    for i=1:numel(fn) %extract the input values back into the param struct
+        tmp = str2double(p{i});
+        if isnan(tmp), tmp = str2num(p{i}); end
+        if i==5, tmp = p{i}; end
+        param.(fn{i}) = tmp;
+    end
 else
     param.pix = pix;
 end
