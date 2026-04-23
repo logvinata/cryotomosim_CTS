@@ -22,3 +22,11 @@ Installation
 Extract the downloaded release and move the folder into your matlab toolbox directory, and then add the /cryotomosim folder to your matlab search path.
 
 Tested on Win10, Ubuntu 22.04, and Mac.
+
+Before running CTS scripts in MATLAB, run:
+
+```matlab
+setup_cts_path
+```
+
+This adds the required CTS folders, including helper code in WIP/, to the MATLAB path for the current session.
