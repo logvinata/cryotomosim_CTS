@@ -1,2 +1,7 @@
 
 *.asv
+*.pdb
+*.gz
+*.cif
+*.mrc
+
