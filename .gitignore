@@ -5,3 +5,6 @@
 *.cif
 *.mrc
 
+.~lock.readme_membranestuff.docx#
+.~lock.readme_filaments.docx#
+.~lock.readme_structurefiles.docx#
