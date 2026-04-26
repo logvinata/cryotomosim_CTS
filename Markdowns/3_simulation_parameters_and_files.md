@@ -116,6 +116,30 @@ Practical acquisition-scheme minimum set: `tilt`, `tiltscheme`, `dose` (scalar/v
 | `.mrc` (full model density volume) | `cts_simulate` | Alternative simulation input model volume | Simulation input |
 | `.mat` (atomic dataset containing `dat.data` + `dat.box`) | `cts_simulate` -> `helper_atoms2vol` | Atomic-point representation converted to volume before simulation | Simulation input |
 
+## Output files created during the simulation pipeline (code-derived)
+
+| File_type | Function | Meaning | Stage of the pipeline | Destination |
+|---|---|---|---|---|
+| `.mrc` (`<ident><suffix>.mrc`) | `cts_model` | Final modeled specimen volume used as simulation input | Model generation output | `$HOME/tomosim/model_<timestamp>_<ident>_pixelsize_<pix><suffix>/` by default (or custom `opt.outdir`) |
+| `.mat` (`<ident><suffix>.mat`) | `cts_model` | Serialized `cts` model struct used directly by `cts_simulate` | Model generation output | Same model folder as above |
+| `.log` (`cts_param_model.log`) | `cts_model` | JSON-encoded model parameters | Model generation output | Same model folder as above |
+| `.csv` (`zcoords_<class>.csv`) | `cts_model` | Per-class coordinate lists (written when non-empty) | Model generation output | Same model folder as above |
+| `.txt` (`tiltanglesT.txt`) | `cts_simulate` / `internal_sim` | Tilt list with randomized tilt error applied (`param.tilt + param.tilterr`) | Projection setup | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.txt` (`tiltanglesR.txt`) | `cts_simulate` / `internal_sim` | Reference tilt list without random error (`param.tilt`) used for reconstruction | Projection setup / reconstruction input | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`0_model<suffix>.mrc`) | `cts_simulate` / `internal_sim` | Rescaled model volume written before projection | Projection setup | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`1_tilt<suffix>.mrc`) | IMOD `xyzproj` call inside `internal_sim` | Simulated tilt-series projections | Projection-space output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`2_dosetilt<suffix>.mrc`) | `helper_electrondetect` via `internal_sim` | Dose/detection-modulated tilt stack (only when `opt.ctford==1`) | Dose simulation output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`3_ctf<suffix>.mrc`) | `helper_ctf` via `internal_sim` | CTF-modulated tilt stack | CTF simulation output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`4_dose<suffix>.mrc`) | `helper_electrondetect` via `internal_sim` | Dose output after CTF (only when `opt.ctford==2`) | Dose simulation output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`2_rad<suffix>.mrc`) | `helper_electrondetect` via `internal_sim` | Radiation/damage map stack | Dose simulation diagnostic output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`5_recon<suffix>.mrc`) | IMOD `tilt` + `trimvol` calls inside `internal_sim` | Final reconstructed tomogram | Reconstruction output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.log` (`cts_param_simulate.log`) | `cts_simulate` | JSON-encoded simulation parameters | Simulation metadata output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`Atlas<suffix>.mrc`) | `helper_particleatlas` (called by `cts_simulate` when input has `cts` struct) | Voxel label atlas (class IDs) | Label output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.txt` (`Atlas<suffix>.txt`) | `helper_particleatlas` | Class-name mapping (ROI list) for atlas labels | Label output | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`ind<k>_<roi>.mrc`) | `helper_particleatlas` | Per-class binary label volume (optional; `atlasindividual==1`) | Label output (optional) | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.tbl` (`ind<k>_<roi>.tbl`) | `helper_particleatlas` -> `generatetable` | Dynamo-style per-class particle table (optional; `dynamotable==1`) | Label output (optional) | `<input_model_directory>/sim_dose_<sumDose><suffix>/` |
+| `.mrc` (`temp.mrc`) | IMOD `tilt` in `internal_sim` | Temporary reconstruction file before `trimvol`; deleted at end | Reconstruction temporary file | `<input_model_directory>/sim_dose_<sumDose><suffix>/` (transient) |
+
 Notes:
 - External runtime requirements (not user-supplied dataset files): IMOD executables (`xyzproj`, `tilt`, `trimvol`) and MATLAB MRC IO functions (`ReadMRC`/`WriteMRC`).
 - `inference`: `helper_electrondetect` calls `helper_radiation`, but in this repo that function is located at `WIP/helper_radiation.m`; it must be on MATLAB path at runtime.
