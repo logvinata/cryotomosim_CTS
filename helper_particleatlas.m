@@ -60,7 +60,7 @@ ident = char(strjoin(roinames,'_'));
 % write class IDs to ROI list file
 roinames = string(roinames); file = fopen(append('Atlas',opt.suffix,'.txt'),'w'); 
 fprintf(file,'background\n'); fprintf(file,'%s\n',roinames); fclose(file);
-WriteMRC(atlas2-1,cts.param.pix,append('Atlas',opt.suffix,'.mrc'),1)
+WriteMRC(atlas2-1,cts.param.pix,append('Atlas',opt.suffix,'.mrc'),2)
 end
 
 function generatetable(split,filename)

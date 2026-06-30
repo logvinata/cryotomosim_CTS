@@ -221,7 +221,7 @@ thick = string(round(param.size(3)*1)); %w = string(param.size(1)-50);
 cmd = append('tilt -tiltfile tiltanglesR.txt -RADIAL 0.35,0.035 -width ',w,...
     ' -thickness ',thick,' ',prev,' temp.mrc'); 
 disp(cmd); [~] = evalc('system(cmd)'); %run the recon after displaying the command
-cmd = append('trimvol -mode 1 -rx temp.mrc ',append('5_recon',base)); %#ok<NASGU>
+cmd = append('trimvol -mode 2 -rx temp.mrc ',append('5_recon',base)); %#ok<NASGU>
 [~] = evalc('system(cmd)'); %run the command and capture outputs from spamming the console
 
 if opt.norm==1
@@ -229,7 +229,7 @@ if opt.norm==1
     delete(append('5_recon',base));
     vol = single(vol);
     normed = (vol-mean(vol,'all'))/std(vol,1,'all');
-    WriteMRC(vol,head.pixA,append('5_recon',base),1);
+    WriteMRC(vol,head.pixA,append('5_recon',base),2);
 end
 [rec,~] = ReadMRC(append('5_recon',base));
 delete temp.mrc %remove temporary files after they are used for rotation
