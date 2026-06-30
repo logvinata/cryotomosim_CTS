@@ -4,6 +4,8 @@
 *.gz
 *.cif
 *.mrc
+*.mat
+*.zip
 
 .~lock.readme_membranestuff.docx#
 .~lock.readme_filaments.docx#
