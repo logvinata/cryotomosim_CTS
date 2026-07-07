@@ -47,7 +47,7 @@ file = fopen('tiltanglesR.txt','w'); fprintf(file,'%i\n',param.tilt); fclose(fil
 mod.box = size(atlas)*param.pix;
 
 WriteMRC(rescale((vol+solv)*-1),param.pix,append('0_model',opt.suffix,'.mrc'));
-WriteMRC(atlas,param.pix,append('Atlas',opt.suffix,'.mrc'),1);
+WriteMRC(atlas,param.pix,append('Atlas',opt.suffix,'.mrc'),2);
 roinames = fieldnames(split); roinames = string(roinames); 
 file = fopen(append('Atlas',opt.suffix,'.txt'),'w'); 
 fprintf(file,'background\n'); fprintf(file,'%s\n',roinames); fclose(file);
