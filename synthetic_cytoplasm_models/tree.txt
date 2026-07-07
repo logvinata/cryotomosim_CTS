@@ -1,0 +1,306 @@
+synthetic_cytoplasm_models$ tree
+.
+├── distractors
+│   ├── layer 1
+│   │   ├── fixed_6his_5HT.distract.membrane.complex.cif
+│   │   ├── fixed_6his_5HT.distract.membrane.complex.mat
+│   │   ├── fixed_6lfm_gprotein.distract.membrane.cif
+│   │   ├── fixed_6lfm_gprotein.distract.membrane.mat
+│   │   ├── GABAar.distract.membrane.complex.cif
+│   │   ├── GABAar.distract.membrane.complex.mat
+│   │   ├── glun1.distract.membrane.mat
+│   │   ├── glun1.distract.membrane.pdb
+│   │   ├── gprotein.distract.membrane.complex.mat
+│   │   └── gprotein.distract.membrane.complex.pdb
+│   ├── layer 2
+│   │   ├── actin_cofilactin.distract.bundle.mat
+│   │   ├── actin_cofilactin.distract.bundle.pdb
+│   │   ├── actin_long.distract.bundle.mat
+│   │   ├── actin_long.distract.bundle.pdb
+│   │   ├── cofilactin_long.distract.bundle.mat
+│   │   ├── cofilactin_long.distract.bundle.pdb
+│   │   ├── neuroMT.distract.cytosol.assembly.mat
+│   │   ├── neuroMT.distract.cytosol.assembly.pdb
+│   │   ├── ribo_4ujd.distract.cytosol.cluster.mat
+│   │   └── ribo_4ujd.distract.cytosol.cluster.pdb
+│   ├── layer 3
+│   │   ├── ck2_3soa.distract.cif
+│   │   ├── ck2_3soa.distract.mat
+│   │   ├── fixed_1qvr.distract.cif
+│   │   ├── fixed_1qvr.distract.mat
+│   │   ├── fixed_2dfs.distract.cif
+│   │   ├── fixed_2dfs.distract.mat
+│   │   ├── fixed_3ulv.distract.cif
+│   │   ├── fixed_3ulv.distract.mat
+│   │   ├── fixed_5o32.distract.cif
+│   │   ├── fixed_5o32.distract.mat
+│   │   ├── fixed_6cnj.distract.cif
+│   │   ├── fixed_6cnj.distract.mat
+│   │   ├── fixed_6igc.distract.cif
+│   │   ├── fixed_6igc.distract.mat
+│   │   ├── fixed_6ksp.distract.cif
+│   │   ├── fixed_6ksp.distract.mat
+│   │   ├── fixed_6m04.distract.cif
+│   │   ├── fixed_6m04.distract.mat
+│   │   ├── fixed_6ta5.distract.cif
+│   │   ├── fixed_6ta5.distract.mat
+│   │   ├── fixed_6u8q.distract.cif
+│   │   ├── fixed_6u8q.distract.mat
+│   │   ├── fixed_6xf8.distract.cif
+│   │   ├── fixed_6xf8.distract.mat
+│   │   ├── fixed_6zqj.distract.cif
+│   │   ├── fixed_6zqj.distract.mat
+│   │   ├── fixed_7bkc.distract.cif
+│   │   ├── fixed_7bkc.distract.mat
+│   │   ├── fixed_7etm.distract.cif
+│   │   ├── fixed_7etm.distract.mat
+│   │   ├── fixed_7nhs.distract.cif
+│   │   ├── fixed_7nhs.distract.mat
+│   │   ├── fixed_7sfw.distract.cif
+│   │   ├── fixed_7sfw.distract.mat
+│   │   ├── proteosome_5fmg.distract.mat
+│   │   ├── proteosome_5fmg.distract.pdb
+│   │   ├── tric_6ks8.cytosol.distract.mat
+│   │   └── tric_6ks8.cytosol.distract.pdb
+│   └── layer 4
+│       ├── actinin_1sjj.distract.mat
+│       ├── actinin_1sjj.distract.pdb
+│       ├── actin_monomer_2q0u.distract.mat
+│       ├── actin_monomer_distract_2q0u.mat
+│       ├── actin_monomer_distract_2q0u.pdb
+│       ├── cam_1exr.distract.cif
+│       ├── cam_1exr.vesicle.distract.mat
+│       ├── fixed_12gs.distract.cif
+│       ├── fixed_12gs.vesicle.distract.mat
+│       ├── fixed_1qtx.distract.cif
+│       ├── fixed_1qtx.vesicle.distract.mat
+│       ├── fixed_1s3x.distract.cif
+│       ├── fixed_1s3x.vesicle.distract.mat
+│       ├── fixed_2cg9.distract.cif
+│       ├── fixed_2cg9.vesicle.distract.mat
+│       ├── fixed_3gl1.distract.cif
+│       ├── fixed_3gl1.vesicle.distract.mat
+│       ├── fixed_4uic.distract.cif
+│       ├── fixed_4uic.vesicle.distract.mat
+│       ├── fixed_5csa.distract.cif
+│       ├── fixed_5csa.vesicle.distract.mat
+│       ├── fixed_6vgr.distract.cif
+│       ├── fixed_6vgr.vesicle.distract.mat
+│       ├── fixed_7b5s.distract.cif
+│       ├── fixed_7b5s.vesicle.distract.mat
+│       ├── fixed_7e6g.distract.cif
+│       ├── fixed_7e6g.vesicle.distract.mat
+│       ├── fixed_7sgm.distract.cif
+│       ├── fixed_7sgm.vesicle.distract.mat
+│       ├── fixed_7wbt.distract.cif
+│       └── fixed_7wbt.vesicle.distract.mat
+├── layer 1
+│   ├── atp_dimer_6rd4.membrane.mat
+│   ├── atp_dimer_6rd4.membrane.pdb
+│   ├── atp_monomer_6rd4.membrane.mat
+│   ├── atp_monomer_6rd4.membrane.pdb
+│   ├── atp_synthase_2x.membrane.complex.mat
+│   ├── atp_synthase_2x.membrane.complex.pdb
+│   ├── atp_synthase_dimer_6tmk.membrane.cif
+│   ├── atp_synthase_dimer_6tmk.membrane.mat
+│   ├── atp_synthase_dimer_6tmk.membrane.pdb
+│   ├── atp_synthase_dimer_gen.membrane.cif
+│   ├── atp_synthase_dimer_gen.membrane.mat
+│   ├── complex3_5xte.membrane.mat
+│   ├── complex3_5xte.membrane.pdb
+│   ├── complexes
+│   │   ├── complex3_5xte.membrane.complex.pdb
+│   │   ├── fixed_6his_5HT.membrane.complex.cif
+│   │   ├── fixed_6his_5HT.membrane.complex.mat
+│   │   ├── fixed_6lfm_gprotein.membrane.complex.cif
+│   │   ├── fixed_6lfm_gprotein.membrane.complex.mat
+│   │   ├── GABAar.membrane.complex.cif
+│   │   ├── GABAar.membrane.complex.mat
+│   │   ├── GABAar.membrane.complex_untransformed.cif
+│   │   ├── glun1.membrane.complex.mat
+│   │   ├── glun1.membrane.complex.pdb
+│   │   ├── gprotein.membrane.comlex.mat
+│   │   ├── gprotein.membrane.comlex.pdb
+│   │   ├── inverted2.pdb
+│   │   ├── state1_8h9s.membrane.pdb
+│   │   ├── state1_atpsynth_invert.membrane.pdb
+│   │   ├── state1_atpsynth.mat
+│   │   ├── state1_atpsynth.membrane.cif
+│   │   ├── state1_atpsynth.membrane.mat
+│   │   ├── state2_8h9t.membrane.pdb
+│   │   └── state3a_8h9u.membrane.pdb
+│   ├── fixed_6his_5HT.membrane.complex.cif
+│   ├── fixed_6his_5HT.membrane.complex.mat
+│   ├── fixed_6lfm_gprotein.membrane.complex.cif
+│   ├── fixed_6lfm_gprotein.membrane.complex.mat
+│   ├── GABAar.membrane.complex.cif
+│   ├── GABAar.membrane.complex.mat
+│   ├── glob_8g2y.membrane.cif
+│   ├── glob_8g2y.membrane.mat
+│   ├── glun1.membrane.complex.mat
+│   ├── glun1.membrane.complex.pdb
+│   ├── gprotein.membrane.comlex.mat
+│   ├── gprotein.membrane.comlex.pdb
+│   ├── state1_8h9s_y_inverted.membrane.cif
+│   ├── state1_8h9s_y_inverted.membrane.mat
+│   ├── state2_8h9t_y_inverted.membrane.cif
+│   ├── state2_8h9t_y_inverted.membrane.mat
+│   ├── state3a_8h9u_y_inverted.membrane.cif
+│   ├── state3a_8h9u_y_inverted.membrane.mat
+│   ├── supercomplex4_8EC0.membrane.cif
+│   ├── test_spike.membrane.pdb
+│   └── vatpase.membrane.cif
+├── layer 2
+│   ├── actin_cofilactin.cytosol.bundle.mat
+│   ├── actin_cofilactin.cytosol.bundle.pdb
+│   ├── actin_curved
+│   │   ├── curved_actin_000.cif
+│   │   ├── fil1.bundle.cif
+│   │   ├── fil1.bundle.mat
+│   │   ├── fil1.cif
+│   │   ├── fil1.mat
+│   │   ├── fil2.bundle.cif
+│   │   ├── fil2.bundle.mat
+│   │   ├── fil2.cif
+│   │   ├── fil2.mat
+│   │   ├── fil3.bundle.cif
+│   │   ├── fil3.bundle.mat
+│   │   ├── fil3.cif
+│   │   ├── fil3.mat
+│   │   ├── fil4.bundle.cif
+│   │   ├── fil4.bundle.mat
+│   │   ├── fil4.cif
+│   │   └── fil4.mat
+│   ├── actin_fascin_hex.cif
+│   ├── actin_fascin_hex_long.complex.cif
+│   ├── actin_fascin_hex_long.complex.mat
+│   ├── actin_filament_7LRG.cif
+│   ├── actin_filament_7LRG.mat
+│   ├── actinin_actin.complex.bundle.cif
+│   ├── actinin_actin.complex.bundle.mat
+│   ├── actin_long.bundle.mat
+│   ├── actin_long.mat
+│   ├── actin_long.pdb
+│   ├── atp_dimer.Stalk.TM.F0.complex.membrane.mat
+│   ├── atp_dimer.Stalk.TM.F0.complex.membrane.pdb
+│   ├── atp_monomer.mStalk.mTM.mFo.complex.membrane.mat
+│   ├── atp_monomer.mStalk.mTM.mFo.complex.membrane.pdb
+│   ├── cofilactin_actin_7LRG_combo.cif
+│   ├── cofilactin_long.bundle.mat
+│   ├── cofilactin_long.bundle.pdb
+│   ├── cofilactin_long.mat
+│   ├── cofilactin_split2.bundle.complex.mat
+│   ├── cofilactin_split2.bundle.complex.pdb
+│   ├── cofilactin_split2.complex.bundle.mat
+│   ├── cofilactin_split2.complex.mat
+│   ├── cofilactin_split2.complex.pdb
+│   ├── cofilactin_split.assembly.cif
+│   ├── cofilactin_split.assembly.mat
+│   ├── cytoskeleton_ribosome_proteins
+│   │   ├── actin_long.mat
+│   │   ├── actin_long.pdb
+│   │   ├── cofilactin_long.mat
+│   │   ├── cofilactin_long.pdb
+│   │   ├── mt_nomip.cif
+│   │   ├── mt_nomip.mat
+│   │   ├── ribo_4ujd.cytosol.mat
+│   │   └── ribo_4ujd.cytosol.pdb
+│   ├── fascin_actin.cif
+│   ├── fascin_actin.complex.bundle.cif
+│   ├── fascin_actin.complex.bundle.mat
+│   ├── fascin_actin.complex.cif
+│   ├── fascin_actin.complex.mat
+│   ├── MT_mip.assembly.cif
+│   ├── MT_mip.assembly.mat
+│   ├── mt_nomip.mat
+│   ├── myo_actin_split.complex.cif
+│   ├── myo_actin_split.complex.mat
+│   ├── neuroMT.cytosol.assembly.mat
+│   ├── neuroMT.cytosol.assembly.pdb
+│   ├── new_myo_actin_split.complex.mat
+│   ├── new_myo_actin_split.complex.pdb
+│   ├── ribo_4ujd.cytosol.cluster.mat
+│   ├── ribo_4ujd.cytosol.mat
+│   ├── ribo_4ujd.cytosol.pdb
+│   ├── ribo_4ujd.mat
+│   ├── ribo.assembly.cif
+│   ├── ribo.complex.cif
+│   └── ribo.membrane.cif
+├── layer 3
+│   ├── ck2_3soa.cif
+│   ├── ck2_3soa.cytosol.mat
+│   ├── ck2_3soa.mat
+│   ├── fixed_1qvr.cif
+│   ├── fixed_1qvr.mat
+│   ├── fixed_2dfs.cif
+│   ├── fixed_2dfs.mat
+│   ├── fixed_3ulv.cif
+│   ├── fixed_3ulv.mat
+│   ├── fixed_5o32.cif
+│   ├── fixed_5o32.mat
+│   ├── fixed_6cnj.cif
+│   ├── fixed_6cnj.mat
+│   ├── fixed_6igc.cif
+│   ├── fixed_6igc.mat
+│   ├── fixed_6ksp.cif
+│   ├── fixed_6ksp.mat
+│   ├── fixed_6m04.cif
+│   ├── fixed_6m04.mat
+│   ├── fixed_6ta5.cif
+│   ├── fixed_6ta5.mat
+│   ├── fixed_6u8q.cif
+│   ├── fixed_6u8q.mat
+│   ├── fixed_6xf8.cif
+│   ├── fixed_6xf8.mat
+│   ├── fixed_6zqj.cif
+│   ├── fixed_6zqj.mat
+│   ├── fixed_7bkc.cif
+│   ├── fixed_7bkc.mat
+│   ├── fixed_7etm.cif
+│   ├── fixed_7etm.mat
+│   ├── fixed_7nhs.cif
+│   ├── fixed_7nhs.mat
+│   ├── fixed_7sfw.cif
+│   ├── fixed_7sfw.mat
+│   ├── proteosome_5fmg.cytosol.mat
+│   ├── proteosome_5fmg.cytosol.pdb
+│   ├── tric_6ks8.cytosol.cluster.mat
+│   └── tric_6ks8.cytosol.cluster.pdb
+└── layer 4
+    ├── actinin_1sjj.cytosol.mat
+    ├── actinin.cytosol.mat
+    ├── actinin.cytosol.pdb
+    ├── actin_monomer_2q0u.cytosol.mat
+    ├── actin_monomer.vesicle.mat
+    ├── actin_monomer.vesicle.pdb
+    ├── cam_1exr.cytosol.mat
+    ├── cam.cytosol.mat
+    ├── cam.vesicle.cif
+    ├── cam.vesicle.mat
+    ├── fixed_12gs.cytosol.cif
+    ├── fixed_12gs.cytosol.mat
+    ├── fixed_1qtx.cytosol.cif
+    ├── fixed_1qtx.cytosol.mat
+    ├── fixed_1s3x.cif
+    ├── fixed_1s3x.mat
+    ├── fixed_2cg9.cif
+    ├── fixed_2cg9.mat
+    ├── fixed_3gl1.cif
+    ├── fixed_3gl1.mat
+    ├── fixed_4uic.cif
+    ├── fixed_4uic.mat
+    ├── fixed_5csa.cif
+    ├── fixed_5csa.mat
+    ├── fixed_6vgr.cif
+    ├── fixed_6vgr.mat
+    ├── fixed_7b5s.cif
+    ├── fixed_7b5s.mat
+    ├── fixed_7e6g.cif
+    ├── fixed_7e6g.mat
+    ├── fixed_7sgm.cif
+    ├── fixed_7sgm.mat
+    ├── fixed_7wbt.cif
+    └── fixed_7wbt.mat
+
+12 directories, 289 files
+
