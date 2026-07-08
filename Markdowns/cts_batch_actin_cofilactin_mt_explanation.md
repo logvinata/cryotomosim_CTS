@@ -17,6 +17,8 @@ Outputs are written under:
 
 The active atomic reconstruction path writes final reconstructions as MRC mode `2`, which is `float32`. The atlas writer in `WIP/cts_simulate_atomic.m` has also been changed to mode `2`.
 
+Each primary run now uses a simple numeric folder and file stem such as `00001/00001.mat` and `00001/00001.atom.mat`. Simulation folders inside each run are named `sim` and `zero_dose_pair`. Parameter details are stored in `metadata.json` and `batch_manifest.csv`, not encoded into the run folder name.
+
 ## Line-By-Line / Block Explanation
 
 Lines 1-3 describe the purpose of the script: batch tomogram generation with a paired zero-dose simulation for every primary simulation.
@@ -47,25 +49,27 @@ Lines 50-51 create or overwrite a CSV manifest in the output folder.
 
 Lines 54-87 are the main batch loop. Each loop creates one model, one nonzero-dose simulation, and one matched zero-dose simulation.
 
-Line 55 draws a random pixel size uniformly from `0.76` to `20.000` Angstroms and rounds it to `0.001`.
+Lines 55-59 define a simple numeric run name such as `00001` and stop if that folder already exists, to avoid mixing old and new outputs.
 
-Lines 56-57 choose one defocus value and one total dose value randomly from the requested step grids.
+Line 61 draws a random pixel size uniformly from `0.76` to `20.000` Angstroms and rounds it to `0.001`.
 
-Lines 58-62 create a filesystem-safe suffix that records run number, pixel size, defocus, and dose.
+Lines 62-63 choose one defocus value and one total dose value randomly from the requested step grids.
 
-Lines 64-65 print run parameters to the MATLAB console.
+Lines 65-66 print run parameters to the MATLAB console.
 
-Line 67 builds the model parameter struct, including all six loaded layers, membrane, and ice settings.
+Line 68 builds the model parameter struct, including all six loaded layers, membrane, and ice settings.
 
-Lines 68-69 call `cts_model_atomic` with tomogram size `[256 256 64]`, the generated model parameters, and the requested output directory.
+Lines 69-70 call `cts_model_atomic` with tomogram size `[256 256 64]`, the generated model parameters, the requested output directory, and the simple numeric basename.
 
-Lines 71-72 convert the returned `.mat` model path to the matching `.atom.mat` path used by `cts_simulate_atomic`.
+Lines 72-73 convert the returned `.mat` model path to the matching `.atom.mat` path used by `cts_simulate_atomic`.
 
-Lines 74-75 build the simulation parameters and run the nonzero-dose simulation.
+Lines 74-76 write `metadata.json` inside the numeric run folder.
 
-Lines 77-79 copy the same simulation parameters, set dose to `0`, and run the paired zero-dose simulation.
+Lines 78-79 build the simulation parameters and run the nonzero-dose simulation in the `sim` subfolder.
 
-Line 81 appends the run metadata to `batch_manifest.csv`.
+Lines 81-83 copy the same simulation parameters, set dose to `0`, and run the paired zero-dose simulation in the `zero_dose_pair` subfolder.
+
+Line 85 appends the run metadata to `batch_manifest.csv`.
 
 Lines 84-86 print a completion message and report total simulation count including pairs.
 
@@ -81,6 +85,8 @@ Lines 151-155 write the manifest CSV header.
 
 Lines 157-161 append one row to the manifest after each completed primary tomogram.
 
+The `makeMetadata` helper writes a JSON sidecar with the run index, numeric run name, model paths, tomogram size, pixel size, defocus, total dose, tilt list, microscope settings, membrane counts, density, iteration counts, and layer file lists.
+
 ## Important Notes
 
 Defocus is randomized once per tomogram, not once per tilt. The current atomic simulation code treats `param.defocus` as a scalar, then adjusts it internally by slab depth.
@@ -88,3 +94,5 @@ Defocus is randomized once per tomogram, not once per tilt. The current atomic s
 The default primary tomogram count is large: `6 defocus values * 11 dose values * 20 pixel-size bins * 2 = 2640`. Because each primary also gets a zero-dose pair, that default creates `5280` simulation folders.
 
 The membrane count is set to `6` because the request specified that membrane should be present but did not specify how many vesicles/membranes to generate.
+
+The console message `no membrane structs to embed, skipping` comes from `helper_randfill_atom_mem`. It means none of the input particle structures had a filename flag containing `membrane`, so CTS did not embed membrane proteins into the generated membrane surfaces. It does not mean membranes were absent; membrane geometry is generated separately from `param.mem`.

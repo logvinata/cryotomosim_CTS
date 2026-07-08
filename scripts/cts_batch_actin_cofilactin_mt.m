@@ -52,31 +52,35 @@ writeManifestHeader(manifestPath);
 
 %% Batch loop
 for runIndex = 1:nPrimaryTomograms
+    runName = sprintf('%05d', runIndex);
+    runFolder = fullfile(outputRoot, runName);
+    if isfolder(runFolder)
+        error('Run folder already exists: %s', runFolder);
+    end
+
     pix = round((0.76 + rand() * (20 - 0.76)) * 1000) / 1000;
     defocus = defocusChoices(randi(numel(defocusChoices)));
     dose = doseChoices(randi(numel(doseChoices)));
-    suffix = sprintf('act_cofil_MT_%05d_pix_%06.3f_df_%+03d_dose_%03d', ...
-        runIndex, pix, defocus, dose);
-    suffix = strrep(suffix, '.', 'p');
-    suffix = strrep(suffix, '+', 'p');
-    suffix = strrep(suffix, '-', 'm');
 
     fprintf('\nCTS batch run %d / %d\n', runIndex, nPrimaryTomograms);
     fprintf('  pixel size: %.3f A, defocus: %d um, dose: %d e/A^2\n', pix, defocus, dose);
 
     modelParam = makeModelParam(pix, layerFiles, particleDensity, iters);
     [cts, ~, ~, ~, ~, ~, ~, ~, ~, modelOutfile] = cts_model_atomic( ...
-        tomogramSize, modelParam, 'suffix', suffix, 'outdir', outputRoot, 'dynamotable', 1);
+        tomogramSize, modelParam, 'outdir', outputRoot, 'dynamotable', 1, 'basename', runName);
 
     [modelPath, modelName] = fileparts(modelOutfile);
     atomModelFile = fullfile(modelPath, [modelName, '.atom.mat']);
+    metadata = makeMetadata(runIndex, runName, tomogramSize, pix, defocus, dose, ...
+        tilts, modelParam, cts.param.mem, layerFiles, modelOutfile);
+    writeJson(fullfile(modelPath, 'metadata.json'), metadata);
 
     simParam = makeSimParam(pix, tilts, dose, defocus);
-    cts_simulate_atomic(atomModelFile, simParam, 'suffix', sprintf('dose_%03d', dose));
+    cts_simulate_atomic(atomModelFile, simParam, 'suffix', 'sim', 'runname', 'sim');
 
     zeroDoseParam = simParam;
     zeroDoseParam.dose = 0;
-    cts_simulate_atomic(atomModelFile, zeroDoseParam, 'suffix', 'dose_000_pair');
+    cts_simulate_atomic(atomModelFile, zeroDoseParam, 'suffix', 'zero_dose_pair', 'runname', 'zero_dose_pair');
 
     appendManifest(manifestPath, runIndex, pix, defocus, dose, cts.param.mem, modelOutfile);
 end
@@ -149,5 +153,37 @@ end
 function appendManifest(manifestPath, runIndex, pix, defocus, dose, memCount, modelOutfile)
 fid = fopen(manifestPath, 'a');
 fprintf(fid, '%d,%.3f,%d,%d,%d,"%s"\n', runIndex, pix, defocus, dose, memCount, modelOutfile);
+fclose(fid);
+end
+
+function metadata = makeMetadata(runIndex, runName, tomogramSize, pix, defocus, dose, ...
+    tilts, modelParam, actualMemCount, layerFiles, modelOutfile)
+metadata.run_index = runIndex;
+metadata.run_name = runName;
+metadata.model_file = modelOutfile;
+metadata.atom_model_file = strrep(modelOutfile, '.mat', '.atom.mat');
+metadata.tomogram_size_voxels = tomogramSize;
+metadata.pixel_size_A = pix;
+metadata.defocus_um = defocus;
+metadata.total_dose_e_per_A2 = dose;
+metadata.zero_dose_pair = true;
+metadata.tilts_degrees = tilts;
+metadata.voltage_kV = 300;
+metadata.spherical_aberration_mm = 2.7;
+metadata.envelope_sigma = 1;
+metadata.radiation_damage = 1;
+metadata.tilt_error = 0.3;
+metadata.tilt_scheme = 'symmetric';
+metadata.requested_membrane_count = modelParam.mem;
+metadata.actual_membrane_count = actualMemCount;
+metadata.ice = modelParam.ice;
+metadata.particle_density = modelParam.density;
+metadata.layer_iterations = modelParam.iters;
+metadata.layers = layerFiles;
+end
+
+function writeJson(filename, data)
+fid = fopen(filename, 'w');
+fprintf(fid, '%s', jsonencode(data));
 fclose(fid);
 end

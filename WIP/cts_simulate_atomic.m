@@ -10,10 +10,12 @@ arguments
     opt.slice = 0
     opt.suffix = ''
     opt.norm = 1
+    opt.runname = ''
 end
 if iscell(param), param = param_simulate(param{:}); end
 if param.pix<0.1, warning('extremely small pixel size (%g) - check paramters',param.pix); end
 if opt.slice==0, opt.slice = param.pix*3; end
+input = char(input);
 
 if strcmp(input,'gui') %load model via GUI or specific filename
     [input, path] = uigetfile({'*atom.mat'},'Select input MRC or generated ts.mat',getenv('HOME')); 
@@ -21,7 +23,7 @@ if strcmp(input,'gui') %load model via GUI or specific filename
 else
     [path,input,ext] = fileparts(input); input = append(input,ext);
 end
-q = load(fullfile(path,input));
+q = load(char(fullfile(path,input)));
 %if isfield(q,'cts'); q=q.cts; end % wrong way to get around vol model data
 % [path,file,ext] = fileparts(outfile); outfile = fullfile(path,append(file,'.atom.mat')); % closer to right
 % way
@@ -37,7 +39,11 @@ end
 cd(path); %cd to the input file location to prepare session folder
 %filename = append(filename,'_',opt.suffix); %generate initial filename
 if ~strncmp('_',opt.suffix,1), opt.suffix = append('_',opt.suffix); end
-runfolder = append('pix_',string(param.pix),'_dose_',string(sum(param.dose)),opt.suffix);
+if strlength(string(opt.runname)) > 0
+    runfolder = string(opt.runname);
+else
+    runfolder = append('pix_',string(param.pix),'_dose_',string(sum(param.dose)),opt.suffix);
+end
 mkdir(runfolder); cd(runfolder); delete *.mrc; fprintf('Session folder: %s\n',runfolder);
 
 file = fopen('tiltanglesT.txt','w'); fprintf(file,'%i\n',param.tilt+param.tilterr); fclose(file);

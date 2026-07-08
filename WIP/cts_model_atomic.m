@@ -14,6 +14,7 @@ arguments
     %opt.ermem = 0
     opt.outdir = []
     opt.dynamotable = 0
+    opt.basename = ''
 end
 %{
 if strcmp(input,'gui')
@@ -115,24 +116,30 @@ time = string(datetime('now','Format','yyyy-MM-dd''t''HH.mm')); %timestamp
 ident = char(strjoin(fieldnames(split),'_')); %combine target names to one string
 if length(ident)>60, ident=ident(1:60); end %truncation check to prevent invalidly long filenames
 if ~strncmp('_',opt.suffix,1), opt.suffix = append('_',opt.suffix); end
-foldername = append('model_',time,'_',ident,'_pixelsize_',string(pix),opt.suffix); 
+if strlength(string(opt.basename)) > 0
+    foldername = string(opt.basename);
+    filestem = string(opt.basename);
+else
+    foldername = append('model_',time,'_',ident,'_pixelsize_',string(pix),opt.suffix); 
+    filestem = append(string(ident), opt.suffix);
+end
 %combine info for folder name
 
 %move to output directory in user/tomosim
 %cd(getenv('HOME')); if ~isfolder('tomosim'), mkdir tomosim; end, cd tomosim
 mkdir(foldername); cd(foldername);
 
-WriteMRC(vol,pix,append(ident,opt.suffix,'.mrc'))
+WriteMRC(vol,pix,append(filestem,'.mrc'))
 dat.box = boxsize;
 dat.data = split;
-save(append(ident,opt.suffix,'.atom.mat'),'dat','-v7.3')
+save(append(filestem,'.atom.mat'),'dat','-v7.3')
 cts.vol = vol+solv; cts.splitmodel = splitvol; cts.param.pix = pix;
 cts.model.particles = vol; cts.model.ice = solv;
 cts.list = list;
 cts.param = param;
 
-outname = append(ident,opt.suffix,'.mat');
-outfile = fullfile(getenv('HOME'),'tomosim',foldername,outname);
+outname = append(filestem,'.mat');
+outfile = fullfile(outdir,foldername,outname);
 save(outname,'cts','-v7.3')
 logmodel(param,'cts_param_model.log'); % log input params as json text file
 
