@@ -15,12 +15,12 @@ end
 if iscell(param), param = param_simulate(param{:}); end
 if param.pix<0.1, warning('extremely small pixel size (%g) - check paramters',param.pix); end
 if opt.slice==0, opt.slice = param.pix*3; end
-input = char(input);
 
 if strcmp(input,'gui') %load model via GUI or specific filename
     [input, path] = uigetfile({'*atom.mat'},'Select input MRC or generated ts.mat',getenv('HOME')); 
     if input==0, error('At least one file must be selected or input'), end
 else
+    input = char(strjoin(string(input), ''));
     [path,input,ext] = fileparts(input); input = append(input,ext);
 end
 q = load(char(fullfile(path,input)));
@@ -44,7 +44,10 @@ if strlength(string(opt.runname)) > 0
 else
     runfolder = append('pix_',string(param.pix),'_dose_',string(sum(param.dose)),opt.suffix);
 end
-mkdir(runfolder); cd(runfolder); delete *.mrc; fprintf('Session folder: %s\n',runfolder);
+if ~isfolder(runfolder)
+    mkdir(runfolder);
+end
+cd(runfolder); delete *.mrc; fprintf('Session folder: %s\n',runfolder);
 
 file = fopen('tiltanglesT.txt','w'); fprintf(file,'%i\n',param.tilt+param.tilterr); fclose(file);
 file = fopen('tiltanglesR.txt','w'); fprintf(file,'%i\n',param.tilt); fclose(file);
@@ -265,8 +268,11 @@ for t=1:numel(param.tilt)
     convolved = zeros(size(vol));
     cv = convolved;
     tparam = param;
-    % radiation might be breaking 0 dose ideal projections
-    rad = helper_radiation(vol,param.pix,param.dose,param.raddamage,'byslice',0);
+    if param.dose > 0 && param.raddamage > 0
+        rad = helper_radiation(vol,param.pix,param.dose,param.raddamage,'byslice',0);
+    else
+        rad = vol;
+    end
     for i=1:size(vol,3)
         adj = (tparam.pix*slabthick*(i-mid))/1e4*1e0; %convert from ang to um
         tparam.defocus = param.defocus+adj;
