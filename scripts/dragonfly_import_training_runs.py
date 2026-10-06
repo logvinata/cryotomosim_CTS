@@ -43,7 +43,7 @@ from ORSModel.ors import Channel, Color, MultiROI
 ROOT = '/mnt/big_data/CTS_actin_cofilactin_MT_simulation'
 LIST_DIR = '/home/nataliya/cryotomosim_CTS/scripts/run_lists/actin_cofilactin_mt'
 RUN_LISTS = ['all5.txt']    # e.g. ['all5.txt', 'no_membrane.txt']
-FIRST, COUNT = 0, 2         # part of the combined list to load; COUNT = None loads to the end
+FIRST, COUNT = 0, None         # part of the combined list to load; COUNT = None loads to the end
 MODE = 'pairs'              # 'pairs' or 'stack'
 STACK_TITLE = 'cts_train'   # MODE 'stack': objects <STACK_TITLE>_tomo and <STACK_TITLE>_labels
 SUB = 'sim'                 # 'sim' (noisy tomogram) or 'zero_dose_pair' (noise-free)
